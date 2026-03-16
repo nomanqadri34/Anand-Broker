@@ -6,8 +6,12 @@ import { Footer } from "@/components/ui/Footer";
 import { LoadingScreen } from "@/components/ui/LoadingScreen";
 import { AnimatePresence } from "framer-motion";
 
+import { usePathname } from "next/navigation";
+
 export function AppProvider({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true);
+  const pathname = usePathname();
+  const isHomePage = pathname === "/";
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -21,7 +25,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       <AnimatePresence>
         {loading && <LoadingScreen />}
       </AnimatePresence>
-      <Navbar />
+      <Navbar forceSolid={!isHomePage} />
       <main className="min-h-screen">{children}</main>
       <Footer />
     </>
